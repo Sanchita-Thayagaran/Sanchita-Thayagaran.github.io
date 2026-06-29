@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import heroPhoto from "./assets/photoprofile.PNG";
 
 // ── Intersection Observer hook ─────────────────────────────────────────────
 function useInView(threshold = 0.15) {
@@ -33,22 +34,38 @@ function FadeUp({ children, delay = 0, className = "" }) {
   );
 }
 
-// ── Data — every word is intentional ──────────────────────────────────────
+// ── Data  -  every word is intentional ──────────────────────────────────────
 const experience = [
   {
-    role: "Senior Software Engineer",
-    subtitle: "Site Reliability & Production Support — Financial Systems",
+    role: "Student Systems Engineer",
+    subtitle: "Full-Stack Engineering & IT Infrastructure",
+    company: "UMass Amherst – CSCF",
+    location: "Amherst, MA",
+    period: "Aug 2025 – May 2026",
+    color: "cyan",
+    tag: "Part-time · 20 hrs/wk",
+    bullets: [
+      "Built a production full-stack billing platform for UMass research groups  -  Next.js frontend with Azure Entra ID SSO via NextAuth, Django REST Framework backend with JWT auth, PostgreSQL on a remote server, and a proxy API architecture that keeps backend services secure from direct client access.",
+      "Engineered the complete multi-role billing workflow end-to-end: Admin, Finance Admin, Grant Admin, and PI  -  covering FTE data ingestion, bill generation, multi-stage review and approval, HR account reallocation, and financial data export. Actively deployed and serving UMass research groups.",
+      "Executed Request Tracker v5-to-v6 migration with zero data loss, ensuring continuity of department ticketing and service management operations across the CS department.",
+      "Provided Linux/Unix server support including system troubleshooting, server configuration, and infrastructure maintenance for CSCF computing environments supporting the CS department.",
+      "Delivered Windows and macOS end-user IT support  -  diagnosing hardware and software issues, assisting students and faculty with system configurations and account management.",
+    ],
+  },
+  {
+    role: "Site Reliability Engineer",
+    subtitle: "Reference Data Infrastructure  -  Equity & Derivatives",
     company: "Morgan Stanley via Accolite Digital",
     location: "Bangalore, India",
     period: "Jun 2022 – Aug 2024",
-    color: "cyan",
+    color: "fuchsia",
     tag: "Full-time · 2 yrs 3 mos",
     bullets: [
-      "Owned 24/7 reliability for Morgan Stanley's global derivatives data pipelines — sustained 99.9% SLA across high-volume equity and fixed-income workflows using Splunk, Grafana, and AWS CloudWatch.",
-      "Cut mean time to recovery by 30% on P1/P2 incidents through systematic Linux diagnostics (top, ps, grep, log tailing) and multi-table Oracle SQL root cause analysis — zero SLA breach during tenure.",
-      "Eliminated 40+ error-prone manual checks by engineering Autosys-scheduled Python and Bash automation, freeing the team from reactive toil and reducing incident response time by 30%.",
-      "Partnered with infra and dev teams across quarterly and annual rebalance cycles — validated Jenkins deployments, executed post-release health checks, and authored runbooks that became team-wide standard operating procedure.",
-      "Prevented downstream financial reconciliation failures by surfacing complex data discrepancies before they reached reporting — directly protecting data integrity across global trading workflows.",
+      "Owned 24/7 reliability for Morgan Stanley's global derivatives data pipelines  -  sustained 99.9%+ SLA across high-volume equity and fixed-income workflows using Splunk, Grafana, Prometheus, and AWS CloudWatch.",
+      "Cut mean time to recovery by 30% (90 → 63 min) on P1/P2 incidents through systematic Linux diagnostics (top, ps, grep, lsof) and multi-table Oracle SQL root cause analysis  -  converted every finding into a runbook that cut repeat P2 incidents by 20%.",
+      "Recovered 15+ engineer-hours of weekly overhead by building 40+ production-grade Python and Bash automation tools, shifting the team from reactive firefighting to proactive reliability engineering.",
+      "Protected 100% data accuracy across quarterly FTSE and MSI index rebalances by coordinating Bloomberg and Refinitiv vendor feed validation across equity and fixed-income derivative reference data pipelines.",
+      "Authored 10+ ITIL-aligned runbooks, SOP documents, and knowledge base articles standardizing incident response, change management, and vendor escalation procedures across the reference data team.",
     ],
   },
   {
@@ -57,10 +74,10 @@ const experience = [
     company: "Accolite Digital",
     location: "Bangalore, India",
     period: "Feb 2022 – Jun 2022",
-    color: "fuchsia",
+    color: "violet",
     tag: "Internship · 5 mos",
     bullets: [
-      "Shipped JWT-secured Spring Boot microservices with Docker containerization, increasing referral processing throughput by 50% — work converted directly to full-time hire.",
+      "Shipped JWT-secured Spring Boot microservices with Docker containerization, increasing referral processing throughput by 50%  -  work converted directly to full-time hire.",
       "Rewrote PostgreSQL analytics queries using CTEs and targeted indexing, achieving a 40% performance improvement on datasets exceeding millions of rows.",
       "Reduced average defect resolution time by ~33% by integrating AWS CloudWatch observability into development workflows and systematically triaging issues through JIRA.",
     ],
@@ -71,23 +88,32 @@ const experience = [
     company: "Tata Consultancy Services (TCS)",
     location: "Coimbatore, India",
     period: "Jun 2021 – Aug 2021",
-    color: "violet",
+    color: "cyan",
     tag: "Internship · 3 mos",
     bullets: [
-      "Engineered a fraud detection pipeline over 3M+ financial transactions — final Random Forest model achieved 96.2% AUC, outperforming baseline by a significant margin.",
-      "Designed class imbalance handling frameworks that reduced false negatives by 22%, directly improving the precision of anomaly detection in production-scale financial data.",
+      "Engineered a fraud detection pipeline over 3M+ financial transactions  -  final Random Forest model achieved 96.2% AUC, outperforming baseline by a significant margin.",
+      "Designed class imbalance handling frameworks using stratified k-fold validation and cost-sensitive learning that reduced false negatives by 22%, improving anomaly detection precision in production-scale financial data.",
     ],
   },
 ];
 
 const projects = [
   {
+    title: "CSCF Billing System",
+    subtitle: "Production · UMass Research Group Billing Platform",
+    stack: ["Next.js", "NextAuth", "Azure Entra ID", "Django REST", "PostgreSQL", "JWT", "Ant Design"],
+    impact: "Actively deployed · Multi-role workflow · Azure SSO",
+    badge: "Production",
+    blurb:
+      "Production billing platform built for UMass CSCF, actively serving UMass research groups. Azure Entra ID SSO via NextAuth, a proxy API architecture preventing direct client-to-backend access, and a complete multi-role workflow  -  Admins generate bills, Finance Admins manage HR account data, Grant Admins allocate funds, and PIs approve or reject final bills. Covers the full lifecycle from raw campus payment data ingestion through FTE calculation, draft bill creation, multi-stage approval, and financial data export.",
+  },
+  {
     title: "Apollo Healthcare Management System",
     subtitle: "End-to-end production-grade healthcare platform",
     stack: ["React", "Django", "PostgreSQL", "AWS SNS", "Google OAuth"],
     impact: "Real-time notifications · Concurrent booking · Secure auth",
     blurb:
-      "Built a full-stack appointment scheduling system handling concurrent user requests with zero data inconsistency. Implemented structured logging for production-style observability, AWS SNS for reliable async notifications, and Google OAuth for secure authentication — engineered with production reliability principles at its core.",
+      "Built a full-stack appointment scheduling system handling concurrent user requests with zero data inconsistency. Implemented structured logging for production-style observability, AWS SNS for reliable async notifications, and Google OAuth for secure authentication  -  engineered with production reliability principles at its core.",
   },
   {
     title: "Financial Fraud Detection Pipeline",
@@ -95,15 +121,15 @@ const projects = [
     stack: ["Python", "Pandas", "Scikit-learn", "Random Forest", "SMOTE"],
     impact: "96.2% AUC · 22% fewer false negatives · 3M+ records",
     blurb:
-      "Designed and benchmarked multiple ML classifiers on a large-scale imbalanced financial dataset. Engineered class-balancing strategies and feature pipelines that pushed model AUC to 96.2% — directly applicable to fraud, anomaly detection, and risk scoring systems in production fintech environments.",
+      "Designed and benchmarked multiple ML classifiers on a large-scale imbalanced financial dataset. Engineered class-balancing strategies and feature pipelines that pushed model AUC to 96.2%  -  directly applicable to fraud, anomaly detection, and risk scoring systems in production fintech environments.",
   },
   {
     title: "Industry 4.0 Healthcare Research Intelligence",
-    subtitle: "NLP-driven literature analysis · IEEE-adjacent research",
+    subtitle: "NLP-driven literature analysis · IEEE Publication",
     stack: ["Python", "LDA", "KeyBERT", "Scikit-learn", "Pandas"],
-    impact: "100+ papers analyzed · High coherence scores · Published insights",
+    impact: "500+ papers analyzed · Coherence 0.43 · Published insights",
     blurb:
-      "Applied LDA topic modeling and KeyBERT keyword extraction to 100+ healthcare research papers, surfacing AI diagnostics and blockchain adoption trends in Healthcare 4.0. Achieved high coherence scores enabling interpretable, strategy-grade topic clusters — demonstrating that I can turn unstructured data into actionable intelligence.",
+      "Applied LDA topic modeling and KeyBERT keyword extraction to 500+ unstructured healthcare research papers, surfacing AI diagnostics and blockchain adoption trends in Healthcare 4.0. Achieved topic coherence scores up to 0.43 enabling interpretable, strategy-grade topic clusters  -  demonstrating that I can turn unstructured data into actionable intelligence.",
   },
   {
     title: "5-Stage Pipelined CPU & Cache Simulator",
@@ -111,16 +137,16 @@ const projects = [
     stack: ["C++", "Pipeline Design", "Hazard Detection", "Cache Simulation"],
     impact: "Hazard detection · CPI analysis · Cache miss optimization",
     blurb:
-      "Designed and implemented a full 5-stage pipelined processor with hazard detection logic and a unified direct-mapped L1 cache (write-through, no-write-allocate). Analyzed CPI, stall cycles, and cache miss rates — the kind of low-level systems thinking that directly informs how I reason about performance bottlenecks in production infrastructure.",
+      "Designed and implemented a full 5-stage pipelined processor with hazard detection logic and a unified direct-mapped L1 cache (write-through, no-write-allocate). Analyzed CPI, stall cycles, and cache miss rates  -  the kind of low-level systems thinking that directly informs how I reason about performance bottlenecks in production infrastructure.",
   },
   {
-    title: "AI-Powered Mobility Educational Application",
-    subtitle: "IEEE Publication · Undergrad Capstone · Apr 2022",
+    title: "AI-Powered Educational Platform",
+    subtitle: "IEEE Publication · Adaptive Learning & Intelligent Matching · Apr 2022",
     stack: [".NET Framework", "MySQL", "Naive Bayes", "Decision Trees", "HTML/CSS/JS"],
     impact: "92% match accuracy · 70% less manual work · IEEE published",
     badge: "Publication",
     blurb:
-      "Built a student-facing social platform that surfaces relevant academic and non-academic events using a hybrid Naive Bayes + Decision Tree profile-matching engine — achieving 92% event-student match accuracy and cutting manual curation effort by 70%. Research was accepted and presented at an IEEE Conference.",
+      "Built a student-facing social platform that surfaces relevant academic and non-academic events using a hybrid Naive Bayes + Decision Tree profile-matching engine  -  achieving 92% event-student match accuracy and cutting manual curation effort by 70%. Research was accepted and presented at an IEEE Conference.",
   },
   {
     title: "E-Pass Generation System",
@@ -128,7 +154,7 @@ const projects = [
     stack: ["HTML", "CSS", "JavaScript", "Java", "MySQL", "XAMPP"],
     impact: "End-to-end portal · Auto-generated passes · Live during pandemic",
     blurb:
-      "Designed and shipped a full-stack e-pass portal during the COVID-19 lockdown to automate safe-travel authorization. Built with a Java + MySQL backend and vanilla JS frontend — a practical, deployed solution for a real civic problem, built entirely during undergraduate studies.",
+      "Designed and shipped a full-stack e-pass portal during the COVID-19 lockdown to automate safe-travel authorization. Built with a Java + MySQL backend and vanilla JS frontend  -  a practical, deployed solution for a real civic problem, built entirely during undergraduate studies.",
   },
 ];
 
@@ -136,36 +162,36 @@ const skillGroups = [
   {
     label: "Languages",
     color: "cyan",
-    items: ["Python", "Java", "C++", "JavaScript", "SQL", "Bash/Shell"],
+    items: ["Python", "Java", "C++", "JavaScript", "TypeScript", "SQL", "Bash/Shell"],
   },
   {
     label: "Cloud & Infrastructure",
     color: "fuchsia",
-    items: ["AWS EC2", "AWS S3", "AWS CloudWatch", "AWS SNS", "IAM", "Linux"],
+    items: ["AWS EC2", "AWS S3", "AWS CloudWatch", "AWS SNS", "AWS Lambda", "Docker", "Kubernetes", "Linux"],
   },
   {
     label: "Observability & SRE",
     color: "violet",
-    items: ["Splunk", "Grafana", "ELK Stack", "PagerDuty", "Autosys", "Jenkins"],
+    items: ["Splunk", "Grafana", "Prometheus", "ELK Stack", "PagerDuty", "Autosys"],
   },
   {
     label: "Frameworks & Databases",
     color: "cyan",
-    items: ["React", "Django", "Spring Boot", "Angular", "PostgreSQL", "Oracle SQL"],
+    items: ["React", "Next.js", "Django", "Spring Boot", "Node.js", "PostgreSQL", "Oracle SQL"],
   },
   {
     label: "ML & Data",
     color: "fuchsia",
-    items: ["Scikit-learn", "Pandas", "NLP", "LDA", "KeyBERT", "Random Forest"],
+    items: ["Scikit-learn", "Pandas", "NumPy", "LDA", "KeyBERT", "Random Forest", "LIME/SHAP"],
   },
   {
-    label: "Tooling",
+    label: "Security & Tooling",
     color: "violet",
-    items: ["Docker", "Git", "JIRA", "ServiceNow", "Tableau", "QlikView"],
+    items: ["JWT", "Azure Entra ID", "OAuth 2.0", "Jenkins", "GitHub Actions", "Git", "JIRA", "Figma"],
   },
 ];
 
-const orbitCards = ["SRE", "DevOps", "Backend", "Infrastructure", "Automation", "Observability", "Software" , "Systems" ];
+const orbitCards = ["SRE", "Backend", "Infrastructure", "Automation", "Observability", "Systems", "Data", "IT"];
 
 const colorMap = {
   cyan:    { dot: "#22d3ee", badge: "border-cyan-400/30 bg-cyan-400/10 text-cyan-200" },
@@ -236,7 +262,7 @@ export default function SanchitaPortfolio() {
         <section className="grid min-h-[78vh] items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]">
           <div>
             <div style={heroStyle(100)} className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.3em] text-cyan-200">
-              SRE · Backend · Infrastructure · DevOps
+              SRE · Software Eng · Infra · Systems · Data
             </div>
 
             <h1 style={heroStyle(200)} className="max-w-5xl text-5xl font-black leading-[1.05] tracking-tight sm:text-6xl lg:text-8xl pb-2 overflow-visible">
@@ -253,7 +279,7 @@ export default function SanchitaPortfolio() {
               </span>
               <button
                 onClick={() => {
-                  const u = new SpeechSynthesisUtterance("Sahn chee ta  Tha yah guh run");
+                  const u = new SpeechSynthesisUtterance("Sun chee ta  Tha yah guh run");
                   u.rate = 0.85;
                   u.pitch = 1.05;
                   window.speechSynthesis.cancel();
@@ -262,7 +288,7 @@ export default function SanchitaPortfolio() {
                 className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/50 transition hover:border-cyan-400/30 hover:bg-cyan-400/10 hover:text-cyan-300 cursor-pointer"
               >
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-                <span className="text-white/30 italic mr-0.5">say:</span> Sahn-chee-ta · Tha-yah-guh-run
+                <span className="text-white/30 italic mr-0.5">say:</span> Sun-chee-ta · Tha-yah-guh-run
               </button>
             </div>
 
@@ -277,9 +303,9 @@ export default function SanchitaPortfolio() {
 
             <div style={heroStyle(550)} className="mt-10 grid gap-4 sm:grid-cols-3">
               {[
-                ["2+", "Years in production SRE & backend engineering"],
-                ["MSCS", "Graduate CS — UMass Amherst, May 2026"],
-                ["3", "Industries: Finance · Healthcare · Research"],
+                ["3+", "Years professional experience across SRE, backend & systems engineering"],
+                ["MSCS", "Graduate CS  -  UMass Amherst, May 2026"],
+                ["4", "Industries: Finance · IT · Healthcare · Research"],
               ].map(([value, label]) => (
                 <div key={label} className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl transition hover:border-cyan-400/30">
                   <div className="text-3xl font-bold text-white">{value}</div>
@@ -297,14 +323,20 @@ export default function SanchitaPortfolio() {
             <div className="absolute h-[22rem] w-[22rem] rounded-full border border-dashed border-cyan-300/20" style={{ animation: "spin 25s linear infinite" }} />
             {/* Inner glow ring */}
             <div className="absolute h-[14rem] w-[14rem] rounded-full border border-cyan-300/20 bg-cyan-300/5 blur-sm" />
-            {/* Center card */}
-            <div className="absolute z-10 rounded-[2rem] border border-white/15 bg-black/60 px-8 py-8 text-center shadow-2xl shadow-fuchsia-500/20 backdrop-blur-2xl">
-              <div className="text-xs uppercase tracking-[0.35em] text-white/50">Currently</div>
-              <div className="mt-2 text-xl font-bold leading-snug">MSCS @ UMass<br/>Amherst</div>
-              <div className="mt-2 text-sm text-white/50">Expected May 2026</div>
-              <div className="mt-3 inline-block rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs text-cyan-300">Open to Roles</div>
+            {/* Center photo */}
+            <div className="absolute z-10 flex flex-col items-center gap-3">
+              <div className="rounded-full p-[3px]" style={{ background: "linear-gradient(135deg, #22d3ee, #e879f9, #a78bfa)" }}>
+                <div className="rounded-full p-[2px] bg-black">
+                  <img
+                    src={heroPhoto}
+                    alt="Sanchita Thayagaran"
+                    className="h-52 w-52 rounded-full object-cover object-top shadow-2xl shadow-fuchsia-500/30"
+                  />
+                </div>
+              </div>
+              <div className="inline-block rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs text-cyan-300">Open to Roles</div>
             </div>
-            {/* Orbit cards — radius 210px, offset angle so cards sit cleanly between top/bottom */}
+            {/* Orbit cards  -  radius 210px, offset angle so cards sit cleanly between top/bottom */}
             {orbitCards.map((item, index) => {
               const angle = (index / orbitCards.length) * Math.PI * 2 - Math.PI / 2;
               const x = Math.cos(angle) * 210;
@@ -329,17 +361,17 @@ export default function SanchitaPortfolio() {
               <div className="text-sm uppercase tracking-[0.25em] text-cyan-200">About</div>
               <h2 className="mt-3 text-3xl font-bold leading-tight">I don't just monitor systems.<br/>I own their reliability.</h2>
               <p className="mt-4 leading-7 text-white/70">
-                In production financial environments, I was the person who rewrote the alerts, automated the toil, and made sure the team had runbooks that actually worked at 3am. I bring that same ownership mentality to everything I build — from production pipelines to research projects to full-stack applications.
+                In production financial environments, I was the person who rewrote the alerts, automated the toil, and made sure the team had runbooks that actually worked at 3am. I bring that same ownership mentality to everything I build  -  from production pipelines to research projects to full-stack applications.
               </p>
               <p className="mt-3 leading-7 text-white/60">
-                Currently deepening my systems and ML foundations at UMass Amherst while actively targeting SRE, backend, infrastructure, and DevOps engineering roles.
+                Currently deepening my systems and ML foundations at UMass Amherst while actively targeting Software Engineering, SRE, Infrastructure, Systems, IT, and Data roles.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
               {[
-                ["Production-First Thinking", "I've been paged on P1 incidents in global financial systems. I know what it means when systems go down — and exactly how to bring them back up."],
+                ["Production-First Thinking", "I've been paged on P1 incidents in global financial systems. I know what it means when systems go down  -  and exactly how to bring them back up."],
                 ["Automation Over Toil", "I've eliminated dozens of manual operational checks through scripted automation. My default is: if a human has to do it twice, it should be a script."],
-                ["Full-Stack Depth", "From Oracle SQL root cause analysis to React frontends to ML pipelines — I operate across the stack without losing engineering rigor."],
+                ["Full-Stack Depth", "From Oracle SQL root cause analysis to React frontends to ML pipelines  -  I operate across the stack without losing engineering rigor."],
                 ["Why Hire Me", "2+ years of SRE in finance + MSCS at a top-10 CS program + real shipped projects. I'm not entry-level. I'm ready to contribute from day one."],
               ].map(([title, text]) => (
                 <div key={title} className="rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition hover:border-fuchsia-400/20">
@@ -520,8 +552,8 @@ export default function SanchitaPortfolio() {
                 },
                 {
                   degree: "B.E. Computer Science",
-                  school: "Sri Krishna College of Engineering & Technology",
-                  note: "Anna University · First Class",
+                  school: "Anna University",
+                  note: "Coimbatore, Tamil Nadu · First Class",
                   period: "Aug 2018 – May 2022",
                   courses: ["Data Structures & Algorithms", "OOP", "DBMS", "Artificial Intelligence", "Cloud App Dev", "Data Mining"],
                   color: "fuchsia",
@@ -555,9 +587,9 @@ export default function SanchitaPortfolio() {
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <div className="text-sm uppercase tracking-[0.25em] text-white/50">Contact</div>
-                <h2 className="mt-2 text-3xl font-bold">If you need systems that don't fall over — let's talk.</h2>
+                <h2 className="mt-2 text-3xl font-bold">If you need systems that don't fall over  -  let's talk.</h2>
                 <p className="mt-3 max-w-xl text-sm leading-7 text-white/60">
-                  Actively seeking SRE, backend, infrastructure, and DevOps engineering roles. Available for full-time positions starting May 2026 — or sooner for co-ops and internships. Based in Amherst, MA. Open to relocation.
+                  Actively seeking Software Engineering, SRE, Infrastructure, Systems, IT, and Data roles. Available for full-time positions starting May 2026  -  or sooner for co-ops and internships. Based in Amherst, MA. Open to relocation anywhere in the USA.
                 </p>
               </div>
               <div className="flex flex-col gap-3 min-w-[180px]">
