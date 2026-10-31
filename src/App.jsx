@@ -34,8 +34,35 @@ function FadeUp({ children, delay = 0, className = "" }) {
   );
 }
 
+// ── Tenure since a start month (inclusive), e.g. "3 mos" or "1 yr 2 mos" ───
+function tenureSince(year, month) {
+  const now = new Date();
+  const total = (now.getFullYear() - year) * 12 + (now.getMonth() + 1 - month) + 1;
+  const yrs = Math.floor(total / 12);
+  const mos = total % 12;
+  const parts = [];
+  if (yrs) parts.push(`${yrs} yr${yrs > 1 ? "s" : ""}`);
+  if (mos) parts.push(`${mos} mo${mos > 1 ? "s" : ""}`);
+  return parts.join(" ");
+}
+
 // ── Data  -  every word is intentional ──────────────────────────────────────
 const experience = [
+  {
+    role: "Software Engineer & Developer Fellow",
+    subtitle: "Data Transformation & Financial Reporting Automation",
+    company: "Greenpoint Global",
+    location: "Rye, NY",
+    period: "Aug 2026 – Present",
+    color: "violet",
+    tag: `Full-time · ${tenureSince(2026, 8)}`,
+    bullets: [
+      "Lead a 4-member Mapping & Automation team, translating business requirements into technical deliverables, coordinating task ownership and code/review workflows, and driving data-mapping and financial-report automation initiatives with cross-functional stakeholders.",
+      "Engineer configuration-driven data transformation and ETL workflows using Python, SQL, Excel, and structured mapping rules to standardize heterogeneous financial data across loans, deposits, investments, and general-ledger records for downstream reporting systems.",
+      "Migrated and validated client financial records across 6 data domains with zero transformation errors, implementing reusable mapping logic and end-to-end Contract-to-GL and Contract-to-Balance-Sheet reconciliation with traceable validation and exception reporting.",
+      "Develop the Call Report Automation & Mapping Framework for NCUA regulatory reporting, integrating dynamic mapping and standardized data-ingestion workflows to support varying client file structures and reduce reliance on manual, client-specific transformations.",
+    ],
+  },
   {
     role: "Student Systems Engineer",
     subtitle: "Full-Stack Engineering & IT Infrastructure",
@@ -43,12 +70,13 @@ const experience = [
     location: "Amherst, MA",
     period: "Aug 2025 – May 2026",
     color: "cyan",
-    tag: "Part-time · 20 hrs/wk",
+    tag: "Part-time · 10 mos",
     bullets: [
       "Built a production full-stack billing platform for UMass research groups  -  Next.js frontend with Azure Entra ID SSO via NextAuth, Django REST Framework backend with JWT auth, PostgreSQL on a remote server, and a proxy API architecture that keeps backend services secure from direct client access.",
       "Engineered the complete multi-role billing workflow end-to-end: Admin, Finance Admin, Grant Admin, and PI  -  covering FTE data ingestion, bill generation, multi-stage review and approval, HR account reallocation, and financial data export. Actively deployed and serving UMass research groups.",
       "Executed Request Tracker v5-to-v6 migration with zero data loss, ensuring continuity of department ticketing and service management operations across the CS department.",
       "Provided Linux/Unix server support including system troubleshooting, server configuration, and infrastructure maintenance for CSCF computing environments supporting the CS department.",
+      "Built agentic development workflows using AI coding agents in agent mode, applying spec-driven development and prompt engineering to scaffold the proxy API architecture and multi-role permission logic; validated all AI-generated output for correctness and security before shipping to production.",
       "Delivered Windows and macOS end-user IT support  -  diagnosing hardware and software issues, assisting students and faculty with system configurations and account management.",
     ],
   },
@@ -65,6 +93,10 @@ const experience = [
       "Cut mean time to recovery by 30% (90 → 63 min) on P1/P2 incidents through systematic Linux diagnostics (top, ps, grep, lsof) and multi-table Oracle SQL root cause analysis  -  converted every finding into a runbook that cut repeat P2 incidents by 20%.",
       "Recovered 15+ engineer-hours of weekly overhead by building 40+ production-grade Python and Bash automation tools, shifting the team from reactive firefighting to proactive reliability engineering.",
       "Protected 100% data accuracy across quarterly FTSE and MSI index rebalances by coordinating Bloomberg and Refinitiv vendor feed validation across equity and fixed-income derivative reference data pipelines.",
+      "Designed, built, and operated Python and Java microservices on AWS (Lambda, EKS, EC2, S3, RDS, IAM) with RESTful APIs, load balancer configuration, Docker deployments via Jenkins and GitHub Actions CI/CD, and Terraform-compatible Infrastructure as Code with GitOps practices and secrets management.",
+      "Built and orchestrated production ETL data pipelines using Apache Airflow, scheduling and monitoring ingestion and transformation workflows for Bloomberg and Refinitiv financial data with automated data quality checks and SQL-driven validation.",
+      "Built observability infrastructure from scratch using Grafana, Prometheus, Splunk, AppDynamics, and CloudWatch; defined SLOs and error budgets across owned services and drove root cause analysis through blameless post-mortems.",
+      "Administered Autosys job scheduling and supported MS SQL Server databases across Unix, Linux, and Windows environments, applying least-privilege IAM policies and secure VPC networking for mission-critical distributed systems.",
       "Authored 10+ ITIL-aligned runbooks, SOP documents, and knowledge base articles standardizing incident response, change management, and vendor escalation procedures across the reference data team.",
     ],
   },
@@ -79,6 +111,7 @@ const experience = [
     bullets: [
       "Shipped JWT-secured Spring Boot microservices with Docker containerization, increasing referral processing throughput by 50%  -  work converted directly to full-time hire.",
       "Rewrote PostgreSQL analytics queries using CTEs and targeted indexing, achieving a 40% performance improvement on datasets exceeding millions of rows.",
+      "Built RESTful APIs in Python (Django) and Java (Spring Boot) with PostgreSQL and MySQL on AWS; delivered unit-tested Docker containerized microservices via CI/CD pipelines in an Agile development environment.",
       "Reduced average defect resolution time by ~33% by integrating AWS CloudWatch observability into development workflows and systematically triaging issues through JIRA.",
     ],
   },
@@ -93,6 +126,7 @@ const experience = [
     bullets: [
       "Engineered a fraud detection pipeline over 3M+ financial transactions  -  final Random Forest model achieved 96.2% AUC, outperforming baseline by a significant margin.",
       "Designed class imbalance handling frameworks using stratified k-fold validation and cost-sensitive learning that reduced false negatives by 22%, improving anomaly detection precision in production-scale financial data.",
+      "Built the end-to-end Python data pipeline using XGBoost, Random Forest, and SMOTE class balancing, with SQL-driven validation and automated reporting.",
     ],
   },
 ];
@@ -108,12 +142,21 @@ const projects = [
       "Production billing platform built for UMass CSCF, actively serving UMass research groups. Azure Entra ID SSO via NextAuth, a proxy API architecture preventing direct client-to-backend access, and a complete multi-role workflow  -  Admins generate bills, Finance Admins manage HR account data, Grant Admins allocate funds, and PIs approve or reject final bills. Covers the full lifecycle from raw campus payment data ingestion through FTE calculation, draft bill creation, multi-stage approval, and financial data export.",
   },
   {
+    title: "SafeRx",
+    subtitle: "GenAI Medication Safety System · Microsoft Agents League Hackathon 2026",
+    stack: ["FastAPI", "Azure AI Foundry", "GPT-4o", "React", "Vite", "Tailwind", "openFDA", "WHO Data"],
+    impact: "6-step reasoning chain · Hard safety escalation · 93+ tests",
+    badge: "Hackathon",
+    blurb:
+      "Built a GenAI medication-safety system using Azure AI Foundry's GPT-4o with a six-step deterministic reasoning chain and hard safety-escalation rules that override model output when a query requires resolution outside the LLM. FastAPI backend and React/Vite/Tailwind frontend backed by live openFDA and WHO data, with 93+ automated tests. Submitted to the Microsoft Agents League Hackathon 2026 (Creative Apps track).",
+  },
+  {
     title: "Apollo Healthcare Management System",
     subtitle: "End-to-end production-grade healthcare platform",
-    stack: ["React", "Django", "PostgreSQL", "AWS SNS", "Google OAuth"],
+    stack: ["React", "Django REST", "PostgreSQL", "AWS Lambda", "AWS SNS", "Google OAuth", "CI/CD"],
     impact: "Real-time notifications · Concurrent booking · Secure auth",
     blurb:
-      "Built a full-stack appointment scheduling system handling concurrent user requests with zero data inconsistency. Implemented structured logging for production-style observability, AWS SNS for reliable async notifications, and Google OAuth for secure authentication  -  engineered with production reliability principles at its core.",
+      "Built a full-stack appointment scheduling system handling concurrent user requests with zero data inconsistency. Implemented structured logging for production-style observability, AWS SNS for reliable async notifications, and Google OAuth for secure authentication  -  engineered with production reliability principles at its core. PostgreSQL row-level locking guards concurrent bookings, AWS Lambda/SNS drives asynchronous event-driven processing, and complete CI/CD pipelines were built from scratch.",
   },
   {
     title: "Financial Fraud Detection Pipeline",
@@ -129,15 +172,15 @@ const projects = [
     stack: ["Python", "LDA", "KeyBERT", "Scikit-learn", "Pandas"],
     impact: "500+ papers analyzed · Coherence 0.43 · Published insights",
     blurb:
-      "Applied LDA topic modeling and KeyBERT keyword extraction to 500+ unstructured healthcare research papers, surfacing AI diagnostics and blockchain adoption trends in Healthcare 4.0. Achieved topic coherence scores up to 0.43 enabling interpretable, strategy-grade topic clusters  -  demonstrating that I can turn unstructured data into actionable intelligence.",
+      "Applied LDA topic modeling and KeyBERT keyword extraction to 500+ unstructured healthcare research papers, surfacing AI diagnostics and blockchain adoption trends in Healthcare 4.0. Achieved topic coherence scores up to 0.43 enabling interpretable, strategy-grade topic clusters  -  demonstrating that I can turn unstructured data into actionable intelligence. Identified 16 distinct latent topics across four healthcare sub-domains (cardiology, oncology, orthopedics, health records), including robotic surgery trends.",
   },
   {
     title: "5-Stage Pipelined CPU & Cache Simulator",
     subtitle: "Systems architecture · Graduate coursework (COMPSCI 535)",
     stack: ["C++", "Pipeline Design", "Hazard Detection", "Cache Simulation"],
-    impact: "Hazard detection · CPI analysis · Cache miss optimization",
+    impact: "3.76x speedup · Hazard detection · Cache simulation",
     blurb:
-      "Designed and implemented a full 5-stage pipelined processor with hazard detection logic and a unified direct-mapped L1 cache (write-through, no-write-allocate). Analyzed CPI, stall cycles, and cache miss rates  -  the kind of low-level systems thinking that directly informs how I reason about performance bottlenecks in production infrastructure.",
+      "Designed and implemented a full 5-stage pipelined processor with hazard detection logic and a unified direct-mapped L1 cache (write-through, no-write-allocate). Analyzed CPI, stall cycles, and cache miss rates  -  the kind of low-level systems thinking that directly informs how I reason about performance bottlenecks in production infrastructure. Added branch handling, then identified and resolved a critical pipeline and cache stall bug, achieving a 3.76x speedup over the single-cycle baseline.",
   },
   {
     title: "AI-Powered Educational Platform",
@@ -167,27 +210,42 @@ const skillGroups = [
   {
     label: "Cloud & Infrastructure",
     color: "fuchsia",
-    items: ["AWS EC2", "AWS S3", "AWS CloudWatch", "AWS SNS", "AWS Lambda", "Docker", "Kubernetes", "Linux"],
+    items: ["AWS EC2", "AWS S3", "AWS CloudWatch", "AWS SNS", "AWS Lambda", "AWS EKS", "AWS RDS", "AWS IAM", "AWS VPC", "Docker", "Kubernetes", "Linux", "Linux (RHEL)", "Terraform (IaC)", "GitOps", "Microservices", "Load Balancing"],
   },
   {
     label: "Observability & SRE",
     color: "violet",
-    items: ["Splunk", "Grafana", "Prometheus", "ELK Stack", "PagerDuty", "Autosys"],
+    items: ["Splunk", "Grafana", "Prometheus", "ELK Stack", "PagerDuty", "Autosys", "AppDynamics", "OpenTelemetry", "Distributed Tracing", "CloudWatch"],
   },
   {
     label: "Frameworks & Databases",
     color: "cyan",
-    items: ["React", "Next.js", "Django", "Spring Boot", "Node.js", "PostgreSQL", "Oracle SQL"],
+    items: ["React", "Next.js", "Django", "Django REST", "FastAPI", "Spring Boot", "Node.js", "PostgreSQL", "Oracle SQL", "MySQL", "MongoDB", "MS SQL Server"],
   },
   {
     label: "ML & Data",
     color: "fuchsia",
-    items: ["Scikit-learn", "Pandas", "NumPy", "LDA", "KeyBERT", "Random Forest", "LIME/SHAP"],
+    items: ["Scikit-learn", "Pandas", "NumPy", "LDA", "KeyBERT", "Random Forest", "LIME/SHAP", "XGBoost", "SMOTE", "Stratified K-Fold CV", "Feature Engineering"],
   },
   {
     label: "Security & Tooling",
     color: "violet",
-    items: ["JWT", "Azure Entra ID", "OAuth 2.0", "Jenkins", "GitHub Actions", "Git", "JIRA", "Figma"],
+    items: ["JWT", "Azure Entra ID", "OAuth 2.0", "Jenkins", "GitHub Actions", "Git", "JIRA", "Figma", "RBAC", "Least-Privilege IAM", "Secrets Management", "Confluence"],
+  },
+  {
+    label: "SRE Practices",
+    color: "cyan",
+    items: ["SLI/SLO Design", "Error Budgets", "Incident Response", "Root Cause Analysis", "Blameless Post-Mortems", "On-Call Operations", "Capacity Planning"],
+  },
+  {
+    label: "Data Engineering & Reporting",
+    color: "fuchsia",
+    items: ["ETL/ELT Pipelines", "Apache Airflow", "Apache Kafka", "SQL Analytics", "Data Mapping", "Power BI", "Excel"],
+  },
+  {
+    label: "AI-Assisted Development",
+    color: "violet",
+    items: ["AI Coding Agents", "Cursor", "Copilot", "Agentic Workflows", "Spec-Driven Development", "Prompt Engineering", "AI Output Validation"],
   },
 ];
 
@@ -364,7 +422,7 @@ export default function SanchitaPortfolio() {
                 In production financial environments, I was the person who rewrote the alerts, automated the toil, and made sure the team had runbooks that actually worked at 3am. I bring that same ownership mentality to everything I build  -  from production pipelines to research projects to full-stack applications.
               </p>
               <p className="mt-3 leading-7 text-white/60">
-                Currently deepening my systems and ML foundations at UMass Amherst while actively targeting Software Engineering, SRE, Infrastructure, Systems, IT, and Data roles.
+                Now a Software Engineer & Developer Fellow at Greenpoint Global, leading a Mapping & Automation team, after completing my M.S. in Computer Science at UMass Amherst. Actively targeting Software Engineering, SRE, Infrastructure, Systems, IT, and Data roles.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
@@ -545,7 +603,7 @@ export default function SanchitaPortfolio() {
                 {
                   degree: "M.S. Computer Science",
                   school: "University of Massachusetts, Amherst",
-                  note: "Top-10 CS program · Expected May 2026",
+                  note: "Top-10 CS program · Graduated May 2026",
                   period: "Sep 2024 – May 2026",
                   courses: ["Computer Networks", "Information Retrieval", "Systems Defense", "Software Engineering", "Optimization", "Data Visualization"],
                   color: "cyan",
@@ -578,6 +636,29 @@ export default function SanchitaPortfolio() {
           </div>
         </FadeUp>
 
+        {/* ── Certifications ── */}
+        <FadeUp className="mt-12">
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
+            <div className="text-sm uppercase tracking-[0.25em] text-cyan-200 mb-6">Certifications &amp; Achievements</div>
+            <div className="grid gap-4 md:grid-cols-3">
+              {[
+                { name: "McKinsey.org Forward Program", issuer: "McKinsey.org", date: "Sept 2026", color: "cyan" },
+                { name: "Google IT Support", issuer: "Coursera · Google", date: "Sept 2020", color: "fuchsia" },
+                { name: "Python for Data Science", issuer: "NPTEL", date: "Aug 2019", color: "violet" },
+              ].map((cert) => {
+                const c = colorMap[cert.color];
+                return (
+                  <div key={cert.name} className="rounded-[1.5rem] border p-5" style={{ borderColor: c.dot + "25", background: c.dot + "08" }}>
+                    <div className="text-xs uppercase tracking-widest mb-1.5" style={{ color: c.dot }}>{cert.date}</div>
+                    <div className="text-base font-bold text-white">{cert.name}</div>
+                    <div className="text-sm text-white/50 mt-0.5">{cert.issuer}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </FadeUp>
+
         {/* ── Contact ── */}
         <FadeUp>
           <section
@@ -589,7 +670,7 @@ export default function SanchitaPortfolio() {
                 <div className="text-sm uppercase tracking-[0.25em] text-white/50">Contact</div>
                 <h2 className="mt-2 text-3xl font-bold">If you need systems that don't fall over  -  let's talk.</h2>
                 <p className="mt-3 max-w-xl text-sm leading-7 text-white/60">
-                  Actively seeking Software Engineering, SRE, Infrastructure, Systems, IT, and Data roles. Available for full-time positions starting May 2026  -  or sooner for co-ops and internships. Based in Amherst, MA. Open to relocation anywhere in the USA.
+                  Actively seeking Software Engineering, SRE, Infrastructure, Systems, IT, and Data roles. Available for full-time positions. Based in Amherst, MA. Open to relocation anywhere in the USA.
                 </p>
               </div>
               <div className="flex flex-col gap-3 min-w-[180px]">
